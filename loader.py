@@ -9,18 +9,13 @@ import shutil
 CHROMA_PATH = "database"
 DATA_PATH = "data"
 
-def run_code():
-    documents = load_documents()
-    chunks = split_text(documents)
-    to_Chroma(chunks)
-
-# Loading all documents contained in the data folder
+# Load all documents contained in the data folder
 def load_documents():
     loader = DirectoryLoader(DATA_PATH, glob="*.pdf")
     documents = loader.load()
     return documents
 
-# Splitting the texts into chunks to prepare them for the RAG
+# Split the texts into chunks to prepare them for the RAG
 def split_text(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size = 1000,
@@ -45,5 +40,10 @@ def to_Chroma(chunks: list[Document]):
         documents=chunks, embedding=embedding_function, persist_directory=CHROMA_PATH)
     print(f"Saved {len(chunks)} chunks to {CHROMA_PATH}.")
 
+def main():
+    documents = load_documents()
+    chunks = split_text(documents)
+    to_Chroma(chunks)
+
 if __name__ == "__main__":
-    run_code()
+    main()
