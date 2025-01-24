@@ -1,42 +1,37 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import subprocess
 import os
+from dotenv import load_dotenv
+from loader import setup_database  
+from query import initialize_resources, make_query
 
-# Define a class for the JSON request format
+# Load environment variables from the .env file
+load_dotenv()
+
+# Access the API key from environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+# Check if the API key is loaded correctly
+if not openai_api_key:
+    raise ValueError("The OPENAI_API_KEY is not defined in the .env file.")
+
+# Define the request format for the JSON payload
 class QueryRequest(BaseModel):
     query_text: str
 
-# Initialize FastAPI
+# Initialize FastAPI application
 app = FastAPI()
 
-# Function to execute loader.py when the server starts
-def run_loader():
-    try:
-        subprocess.run(["python", "loader.py"], check=True)
-        print("Loader script executed successfully")
-    except subprocess.CalledProcessError as e:
-        print(f"Error when executing loader.py: {e}")
-
-# Run loader.py on server startup
+# Initialize resources only once when the application starts
 @app.on_event("startup")
 async def startup_event():
-    run_loader()
+    setup_database()  # Function that handles database setup, if needed
+    global db, model, prompt_template
+    db, model, prompt_template = initialize_resources()  # Initialize necessary resources (DB, model, prompt)
 
-# POST route to handle search requests
+# POST endpoint to handle search queries
 @app.post("/query/")
 async def query(request: QueryRequest):
     query_text = request.query_text
-    
-    # Execute the query.py script with the query text
-    try:
-        result = subprocess.run(
-            ["python", "query.py", query_text],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        response = result.stdout.strip()  # Extract the response from the standard output
-        return {"response": response}
-    except subprocess.CalledProcessError as e:
-        return {"error": f"Error when executing query.py: {e}"}
+    formatted_response = make_query(query_text, db, model, prompt_template)
+    return {"response": formatted_response}

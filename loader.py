@@ -9,41 +9,41 @@ import shutil
 CHROMA_PATH = "database"
 DATA_PATH = "data"
 
-# Load all documents contained in the data folder
 def load_documents():
+    # Load all documents from the data folder.
     loader = DirectoryLoader(DATA_PATH, glob="*.pdf")
     documents = loader.load()
     return documents
 
-# Split the texts into chunks to prepare them for the RAG
 def split_text(documents: list[Document]):
+    # Split documents into chunks for RAG processing.
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size = 1000,
-        chunk_overlap = 500,
-        length_function = len,
-        add_start_index = True
+        chunk_size=1000,
+        chunk_overlap=500,
+        length_function=len,
+        add_start_index=True
     )
     chunks = text_splitter.split_documents(documents)
     return chunks
 
-# Database creation
 def to_Chroma(chunks: list[Document]):
-    # Clear out the previous database first (if it exists).
+    # Clear the previous database if it exists
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
 
-    # Embeddings obtention
+    # Obtain embeddings
     embedding_function = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-    # Create a new database from the documents.
+    # Create a new database from documents
     db = Chroma.from_documents(
-        documents=chunks, embedding=embedding_function, persist_directory=CHROMA_PATH)
+        documents=chunks, embedding=embedding_function, persist_directory=CHROMA_PATH
+    )
     print(f"Saved {len(chunks)} chunks to {CHROMA_PATH}.")
 
-def main():
+def setup_database():
     documents = load_documents()
     chunks = split_text(documents)
     to_Chroma(chunks)
 
 if __name__ == "__main__":
-    main()
+    setup_database()
