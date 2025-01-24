@@ -4,9 +4,15 @@ langchain-community
 langchain-huggingface
 langchain-chroma
 langchain-openai
+unstructured[pdf]
 
 # OpenAI SDK for interacting with OpenAI's API
 openai
 
 # Utility for loading environment variables from a .env file
 python-dotenv
+
+# Backend
+fastapi 
+uvicorn
+pydantic
