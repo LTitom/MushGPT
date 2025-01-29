@@ -1,6 +1,7 @@
 # Use the official Python image from Docker Hub as a base
 FROM python:3.9-slim
 
+# Install the necessary python libraries on the environnement
 RUN apt update && apt install -y \
     libgl1 \
     tesseract-ocr \

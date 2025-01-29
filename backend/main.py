@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import os
 from dotenv import load_dotenv
 from loader import setup_database  
-from query import initialize_resources, make_query
+from query import make_query
+from initialize import initialize_resources
+import os
 
 # Load environment variables from the .env file
 load_dotenv()
