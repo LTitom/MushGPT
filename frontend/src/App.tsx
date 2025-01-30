@@ -27,7 +27,7 @@ function App() {
       setChatHistory(prev => [...prev, { type: 'bot', text: data.response }]);
     } catch (error) {
       console.error('Error:', error);
-      setChatHistory(prev => [...prev, { type: 'bot', text: 'Sorry, I encountered an error. Please try again.' }]);
+      setChatHistory(prev => [...prev, { type: 'bot', text: "Désolé, j'ai rencontré une erreur. Veuillez réessayer plus tard." }]);
     }
 
     setIsLoading(false);
@@ -35,12 +35,12 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-custom-dark text-white">
       {/* Header */}
       <header className="border-b border-gray-800 p-4">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
           <Sprout className="w-8 h-8 text-green-400" />
-          <h1 className="text-xl font-semibold">EcoGPT v1.0</h1>
+          <h1 className="text-xl font-semibold">MushGPT v1.0</h1>
         </div>
       </header>
 
@@ -112,7 +112,7 @@ function App() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-4">
-          EcoGPT peut faire des erreurs. Vérifiez les informations importantes par vous-même
+          MushGPT peut faire des erreurs. Vérifiez les informations importantes par vous-même
         </p>
       </main>
     </div>
