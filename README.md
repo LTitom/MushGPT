@@ -45,7 +45,7 @@ Ensure you have the following installed:
    ```sh
    OPENAI_API_KEY=your_api_key_here
    ```
-   If you don’t have an OpenAI API key, follow the official guide here: [How to get an OpenAI API Key](https://platform.openai.com/docs/quickstart).
+   If you don’t have an OpenAI API key, you can create one [here](https://platform.openai.com/api-keys).
 3. Build and launch the project using Docker:
    ```sh
    docker compose up --build
