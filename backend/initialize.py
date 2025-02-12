@@ -13,6 +13,7 @@ def initialize_resources():
 
     {context}
 
-    En utilisant le contexte précédent, répondez à la question suivante (dans la langue de la question) : {question}
+    En utilisant le contexte précédent, répondez de manière structurée à la question suivante : {question}
+    Vous répondrez toujours dans la langue de la question.
     """)
     return db, model, prompt_template

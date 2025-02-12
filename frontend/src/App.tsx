@@ -27,7 +27,7 @@ function App() {
       setChatHistory(prev => [...prev, { type: 'bot', text: data.response }]);
     } catch (error) {
       console.error('Error:', error);
-      setChatHistory(prev => [...prev, { type: 'bot', text: "Désolé, j'ai rencontré une erreur. Veuillez réessayer plus tard." }]);
+      setChatHistory(prev => [...prev, { type: 'bot', text: "Désolé, je ne possède pas d'informations sur ce sujet, posez moi des questions sur la transition écologique ou la biodiversité!" }]);
     }
 
     setIsLoading(false);
@@ -40,7 +40,7 @@ function App() {
       <header className="border-b border-gray-800 p-4">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
           <Sprout className="w-8 h-8 text-green-400" />
-          <h1 className="text-xl font-semibold">MushGPT v1.0</h1>
+          <h1 className="text-xl font-semibold">MushGPT BETA</h1>
         </div>
       </header>
 
@@ -112,7 +112,7 @@ function App() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-4">
-          MushGPT peut faire des erreurs. Vérifiez les informations importantes par vous-même
+          MushGPT peut faire des erreurs. Vérifiez les informations importantes par vous-même.
         </p>
       </main>
     </div>
